@@ -15,6 +15,8 @@
 		5038C1EC211C83EF00BCAC4A /* Webview in Resources */ = {isa = PBXBuildFile; fileRef = 5038C1EB211C83EF00BCAC4A /* Webview */; };
 		5038C1EF211C928000BCAC4A /* EvangelionClock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038C1ED211C928000BCAC4A /* EvangelionClock.m */; };
 		5038C1F0211C928000BCAC4A /* EvangelionClock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038C1EE211C928000BCAC4A /* EvangelionClock.h */; };
+		5038C1F3211C928000BCAC4A /* EvangelionClockLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038C1F1211C928000BCAC4A /* EvangelionClockLogic.m */; };
+		5038C1F4211C928000BCAC4A /* EvangelionClockLogic.h in Headers */ = {isa = PBXBuildFile; fileRef = 5038C1F2211C928000BCAC4A /* EvangelionClockLogic.h */; };
 		77AD4D312041E44A001100EC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AD4D302041E44A001100EC /* AppKit.framework */; };
 		77AD4D332041F756001100EC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AD4D322041F756001100EC /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -30,6 +32,8 @@
 		5038C1EB211C83EF00BCAC4A /* Webview */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Webview; sourceTree = "<group>"; };
 		5038C1ED211C928000BCAC4A /* EvangelionClock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvangelionClock.m; sourceTree = "<group>"; };
 		5038C1EE211C928000BCAC4A /* EvangelionClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvangelionClock.h; sourceTree = "<group>"; };
+		5038C1F1211C928000BCAC4A /* EvangelionClockLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvangelionClockLogic.m; sourceTree = "<group>"; };
+		5038C1F2211C928000BCAC4A /* EvangelionClockLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvangelionClockLogic.h; sourceTree = "<group>"; };
 		77AD4D302041E44A001100EC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		77AD4D322041F756001100EC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -83,6 +87,8 @@
 			children = (
 				5038C1EE211C928000BCAC4A /* EvangelionClock.h */,
 				5038C1ED211C928000BCAC4A /* EvangelionClock.m */,
+				5038C1F2211C928000BCAC4A /* EvangelionClockLogic.h */,
+				5038C1F1211C928000BCAC4A /* EvangelionClockLogic.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -107,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5038C1F0211C928000BCAC4A /* EvangelionClock.h in Headers */,
+				5038C1F4211C928000BCAC4A /* EvangelionClockLogic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5038C1EF211C928000BCAC4A /* EvangelionClock.m in Sources */,
+				5038C1F3211C928000BCAC4A /* EvangelionClockLogic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

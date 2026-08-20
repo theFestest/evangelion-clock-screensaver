@@ -1,4 +1,5 @@
 #import "EvangelionClock.h"
+#import "EvangelionClockLogic.h"
 #import <WebKit/WebKit.h>
 
 @implementation EvangelionClock
@@ -19,24 +20,7 @@ static NSString * const evangelionClockModule = @"de.pascal-wagler.evangelion-cl
         @"0", @"styleOption", // Default to use normal style
         nil]];
 
-    NSString *style = @"/Webview/style-normal-3d.html";
-    switch ([defaults integerForKey:@"styleOption"]) {
-        case 0:
-            style = @"/Webview/style-normal-3d.html";
-            break;
-        case 1:
-            style = @"/Webview/style-red-3d.html";
-            break;
-        case 2:
-            style = @"/Webview/style-normal.html";
-            break;
-        case 3:
-            style = @"/Webview/style-red.html";
-            break;
-        default:
-            style = @"/Webview/style-normal-3d.html";
-            break;
-    }
+    NSString *style = EVAStyleHTMLPath([defaults integerForKey:@"styleOption"]);
 
     // Webview
     NSURL* indexHTMLDocumentURL = [NSURL URLWithString:[[[NSURL fileURLWithPath:[[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:style] isDirectory:NO] description] stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""]];
@@ -45,32 +29,19 @@ static NSString * const evangelionClockModule = @"de.pascal-wagler.evangelion-cl
     webView.drawsBackground = NO; // Avoids a "white flash" just before the index.html file has loaded
     [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:indexHTMLDocumentURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0]];
 
-    // Show on screens based on preferences
+    // Show on screens based on preferences. Option 0 is the primary screen
+    // (the screen the menubar is shown on under Displays > 'arrangement'),
+    // option 1 the last focussed screen (which _sometimes_ results in nothing
+    // being shown when previewing in system prefs), option 2 all screens.
     NSArray* screens = [NSScreen screens];
     NSScreen* primaryScreen = [screens objectAtIndex:0];
 
-    switch ([defaults integerForKey:@"screenDisplayOption"]) {
-        // Primary screen (System Preferences > Displays).
-        // The screen the menubar is shown on under 'arrangement'
-        case 0:
-            if ((primaryScreen.frame.origin.x == frame.origin.x) || isPreview) {
-                [self addSubview:webView];
-            }
-            break;
-        // Last Focussed Screen
-        // This _sometimes_ results in nothing being shown when previewing in system prefs.
-        case 1:
-            if (([NSScreen mainScreen].frame.origin.x == frame.origin.x) || isPreview) {
-                [self addSubview:webView];
-            }
-            break;
-        // All Screens
-        case 2:
-            [self addSubview:webView];
-            break;
-        default:
-            [self addSubview:webView];
-            break;
+    if (EVAShouldAttachToScreen([defaults integerForKey:@"screenDisplayOption"],
+                                isPreview,
+                                frame.origin.x,
+                                primaryScreen.frame.origin.x,
+                                [NSScreen mainScreen].frame.origin.x)) {
+        [self addSubview:webView];
     }
 
     return self;
