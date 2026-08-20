@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install web toolchain
+        run: npm ci
+
+      - name: Generate webview assets
+        run: npx grunt build
+
+      - name: Native logic tests
+        run: npm run test:native
+
+      - name: Build screensaver
+        run: xcodebuild -project "Evangelion Clock.xcodeproj" -target "Evangelion Clock" -configuration Release ONLY_ACTIVE_ARCH=NO build
+
+      - name: Verify universal binary
+        run: |
+          BIN="build/Release/Evangelion Clock.saver/Contents/MacOS/Evangelion Clock"
+          lipo -info "$BIN"
+          lipo -info "$BIN" | grep -q arm64
+          lipo -info "$BIN" | grep -q x86_64
+
+      - name: Install Playwright browser
+        run: npx playwright install chromium
+
+      - name: Visual and behavior tests
+        run: npm test
+
+      - name: Upload test failure diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: test-results/
+          if-no-files-found: ignore
