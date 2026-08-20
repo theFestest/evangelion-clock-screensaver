@@ -44,7 +44,36 @@ static NSString * const evangelionClockModule = @"de.pascal-wagler.evangelion-cl
         [self addSubview:webView];
     }
 
+    // Exit with the screensaver instead of lingering: since macOS 14 the
+    // legacyScreenSaver host keeps old instances (and this WebView's
+    // memory) alive across activations. The willstop notification is the
+    // reliable stop signal there; stopAnimation is not delivered. See
+    // https://github.com/AerialScreensaver/ScreenSaverMinimal for the
+    // pattern.
+    if (EVAShouldExitOnScreenSaverStop(isPreview,
+                                       NSProcessInfo.processInfo.operatingSystemVersion.majorVersion)) {
+        [[NSDistributedNotificationCenter defaultCenter]
+            addObserver:self
+               selector:@selector(screenSaverWillStop:)
+                   name:@"com.apple.screensaver.willstop"
+                 object:nil
+     suspensionBehavior:NSNotificationSuspensionBehaviorDeliverImmediately];
+    }
+
     return self;
+}
+
+- (void)screenSaverWillStop:(NSNotification *)notification {
+    // Grace period so the system's fade-out completes before the process
+    // dies.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+        exit(0);
+    });
+}
+
+- (void)dealloc {
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - ScreenSaverView

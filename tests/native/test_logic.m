@@ -41,6 +41,14 @@ int main(void) {
 		// Unknown options attach everywhere.
 		CHECK(EVAShouldAttachToScreen(99, NO, 1440, 0, 0), "unknown option attaches everywhere");
 
+		// Self-exit on screensaver stop: works around legacyScreenSaver
+		// (macOS 14+) never destroying instances. Never in preview; never
+		// on systems where stopAnimation still works.
+		CHECK(EVAShouldExitOnScreenSaverStop(NO, 14), "exits on stop on macOS 14");
+		CHECK(EVAShouldExitOnScreenSaverStop(NO, 26), "exits on stop on macOS 26");
+		CHECK(!EVAShouldExitOnScreenSaverStop(YES, 26), "never exits in preview");
+		CHECK(!EVAShouldExitOnScreenSaverStop(NO, 13), "keeps stock behavior before macOS 14");
+
 		if (failures) {
 			fprintf(stderr, "%d test(s) failed\n", failures);
 			return 1;

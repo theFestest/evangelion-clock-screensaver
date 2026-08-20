@@ -21,7 +21,8 @@
 	"scripts": {
 		"build": "grunt build",
 		"test": "playwright test",
-		"test:native": "tests/native/run.sh"
+		"test:native": "tests/native/run.sh",
+		"test:lifecycle": "tests/native/test_lifecycle.sh"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.62.1",

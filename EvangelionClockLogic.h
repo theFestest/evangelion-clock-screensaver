@@ -15,3 +15,12 @@ BOOL EVAShouldAttachToScreen(NSInteger screenDisplayOption,
 							 CGFloat frameOriginX,
 							 CGFloat primaryScreenOriginX,
 							 CGFloat mainScreenOriginX);
+
+// Whether the hosting process should exit when the screensaver stops.
+// Since macOS 14 the legacyScreenSaver host neither destroys
+// ScreenSaverView instances nor reliably delivers stopAnimation, so
+// instances (and their memory) pile up across activations; exiting lets
+// macOS respawn a fresh host next time. Never exit in preview (that would
+// kill System Settings' extension host), and keep stock behavior on
+// systems whose host still stops correctly.
+BOOL EVAShouldExitOnScreenSaverStop(BOOL isPreview, NSInteger osMajorVersion);

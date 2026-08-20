@@ -57,7 +57,10 @@ The built `Evangelion Clock.saver` (universal arm64 + x86_64) lands in `build/Re
 npm run test:native               # unit tests for the display-selection logic
 npx playwright install chromium   # once
 npm test                          # visual regression + clock behavior tests
+npm run test:lifecycle            # self-exit-on-stop integration test (needs a GUI session + Release build)
 ```
+
+`tools/harness.m` runs the built `.saver` in a normal window for development and memory profiling; see its header comment for the build line and modes.
 
 Pushing a `v*` tag builds the `.saver` zip and attaches it to a GitHub release. The Release workflow can also be run manually from the Actions tab; the zip is then available as a build artifact on the run.
 

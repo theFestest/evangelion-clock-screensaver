@@ -32,3 +32,7 @@ BOOL EVAShouldAttachToScreen(NSInteger screenDisplayOption,
 			return YES;
 	}
 }
+
+BOOL EVAShouldExitOnScreenSaverStop(BOOL isPreview, NSInteger osMajorVersion) {
+	return !isPreview && osMajorVersion >= 14;
+}
