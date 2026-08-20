@@ -5,7 +5,10 @@ module.exports = defineConfig({
 	fullyParallel: true,
 	use: {
 		viewport: { width: 1280, height: 800 },
-		deviceScaleFactor: 2
+		deviceScaleFactor: 2,
+		// Frozen test times are constructed with Date.UTC; pinning the
+		// browser timezone makes the rendered digits machine-independent.
+		timezoneId: "UTC"
 	},
 	expect: {
 		toHaveScreenshot: {
