@@ -18,7 +18,13 @@
 	},
 	"private": false,
 	"license": "BSD-3-Clause",
+	"scripts": {
+		"build": "grunt build",
+		"test": "playwright test",
+		"test:native": "tests/native/run.sh"
+	},
 	"devDependencies": {
+		"@playwright/test": "^1.62.1",
 		"grunt": "^1.5.3",
 		"grunt-assets-inline": "^1.2.4",
 		"grunt-contrib-clean": "^2.0.0",

@@ -142,3 +142,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Playwright output
+test-results/
+playwright-report/
