@@ -225,14 +225,17 @@ module.exports = function(grunt) {
 				options: {
 					plugins: [
 						{
-							removeViewBox: false
-						},
-						{
-							cleanupIDs: {
-								preservePrefixes: [
-									"clock-digit",
-									"clock-dots"
-								]
+							name: "preset-default",
+							params: {
+								overrides: {
+									removeViewBox: false,
+									cleanupIds: {
+										preservePrefixes: [
+											"clock-digit",
+											"clock-dots"
+										]
+									}
+								}
 							}
 						}
 					]
