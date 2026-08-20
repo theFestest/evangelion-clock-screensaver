@@ -41,6 +41,26 @@ Text from the Screensaver:
 8. The first Option should be selected. Click *Install*.
 9. You can find the screensaver by opening *System Preferences* > *Desktop & Screen Saver* > *Screen Saver*.
 
+## Development
+
+Building requires Xcode and Node.js.
+
+```sh
+npm ci             # install the web toolchain
+npm run build      # generate Resources/Webview from webview/
+xcodebuild -project "Evangelion Clock.xcodeproj" -target "Evangelion Clock" -configuration Release build
+```
+
+The built `Evangelion Clock.saver` (universal arm64 + x86_64) lands in `build/Release/`.
+
+```sh
+npm run test:native               # unit tests for the display-selection logic
+npx playwright install chromium   # once
+npm test                          # visual regression + clock behavior tests
+```
+
+Pushing a `v*` tag builds the `.saver` zip and attaches it to a GitHub release. The Release workflow can also be run manually from the Actions tab; the zip is then available as a build artifact on the run.
+
 ## Related
 
 - [Simple Clock Screensaver](https://github.com/Wandmalfarbe/Simple-Clock-Screensaver) is an analogue clock screensaver for macOS written entirely in Swift. It has support for skins/themes (in source code only) and can be styled to match a wide variety of analogue wall clocks.
